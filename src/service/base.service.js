@@ -4,16 +4,29 @@ module.exports = class BaseService{
 
     }
 
-     get(){
-        return this.db.findMany({})
+    async  get(){
+        return await this.db.findMany({})
     }
-     getDetailById(){
+    async getDetailById(id){
+        return await this.db.findUnique({
+            where:{
+                id
+            }
+        })
 
     }
-     delete(){
-
+    async delete(id){
+        return await this.db.delete({
+            where:{
+                id
+            }
+        })
     }
-     update(){
-
+    async update(id){
+        return await this.db.update({
+            where:{
+                id
+            }
+        })
     }
 }
