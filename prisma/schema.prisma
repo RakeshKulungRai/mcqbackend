@@ -11,69 +11,70 @@ datasource db {
 }
 
 model User {
-  id         Int       @id @default(autoincrement())
-  email      String    @unique
+  id         Int         @id @default(autoincrement())
+  email      String      @unique
   name       String
-  role       String    @default("USER")
-  created_at DateTime? @default(now())
+  role       String      @default("USER")
+  created_at DateTime?   @default(now())
   password   String
   challenges Challenge[]
 }
 
-model Question{
-    id         Int       @id @default(autoincrement())
-    Question   String
-    created_at DateTime? @default(now())
-    score Float
-    options Option[]
-    answer Answer?
-    challeges ChallengeQuestion[]
-  
+model Question {
+  id         Int                 @id @default(autoincrement())
+  question   String
+  created_at DateTime?           @default(now())
+  score      Float
+  options    Option[]
+  answer     Answer?
+  challeges  ChallengeQuestion[]
 }
-model Option{
-  id  Int       @id @default(autoincrement())
-  question_id Int
-  question Question @relation(fields:[question_id],references: [id])
-  answer Answer?
-  created_at DateTime? @default(now())
+
+model Option {
+  id               Int                      @id @default(autoincrement())
+  question_id      Int
+  option           String
+  question         Question                 @relation(fields: [question_id], references: [id])
+  answer           Answer?
+  created_at       DateTime?                @default(now())
   challenge_answer ChallegeQuestionAnswer[]
 }
 
-model Answer{
-  id Int @id @default(autoincrement())
-  question_id Int @unique
-  question Question @relation(fields: [question_id], references: [id])
-  option_id Int @unique
-  option Option @relation(fields: [option_id],references: [id])
-  created_at DateTime? @default(now())
-
+model Answer {
+  id          Int       @id @default(autoincrement())
+  question_id Int       @unique
+  question    Question  @relation(fields: [question_id], references: [id])
+  option_id   Int       @unique
+  option      Option    @relation(fields: [option_id], references: [id])
+  created_at  DateTime? @default(now())
 }
-model Challenge{
-  id Int @id @default(autoincrement())
-  user_id Int
-  user User @relation(fields: [user_id],references: [id])
-  score Float 
-  created_at DateTime? @default(now())
-  questions ChallengeQuestion[]
-  duration Int? @default(1)
 
+model Challenge {
+  id         Int                 @id @default(autoincrement())
+  user_id    Int
+  user       User                @relation(fields: [user_id], references: [id])
+  score      Float
+  created_at DateTime?           @default(now())
+  questions  ChallengeQuestion[]
+  duration   Int?                @default(1)
 }
-model ChallengeQuestion{
-  id Int @id @default(autoincrement())
+
+model ChallengeQuestion {
+  id           Int       @id @default(autoincrement())
   challenge_id Int
-  challenge Challenge @relation(fields: [challenge_id],references: [id])
-  question_id Int
-  question Question @relation(fields: [question_id],references: [id])
-  @@unique([question_id,challenge_id])
- 
+  challenge    Challenge @relation(fields: [challenge_id], references: [id])
+  question_id  Int
+  question     Question  @relation(fields: [question_id], references: [id])
+
   answer ChallegeQuestionAnswer?
+
+  @@unique([question_id, challenge_id])
 }
 
-model ChallegeQuestionAnswer{
-  id Int @id @default(autoincrement())
-  challege_question_id Int @unique
-  option_id Int @unique
-  challege_question ChallengeQuestion @relation(fields: [challege_question_id],references: [id])
-  option Option @relation(fields: [option_id],references: [id])
-
+model ChallegeQuestionAnswer {
+  id                   Int               @id @default(autoincrement())
+  challege_question_id Int               @unique
+  option_id            Int               @unique
+  challege_question    ChallengeQuestion @relation(fields: [challege_question_id], references: [id])
+  option               Option            @relation(fields: [option_id], references: [id])
 }

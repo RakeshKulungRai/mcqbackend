@@ -9,7 +9,6 @@ dotenv.config();
 const white_list = ["http://localhost:3000"];
 const cor_options = {
     origin: (origin, callback) => {
-        console.log(white_list.includes(origin), origin);
         if (white_list.includes(origin) || !origin) {
             callback(null, true);
         } else {

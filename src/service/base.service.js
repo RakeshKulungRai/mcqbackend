@@ -1,32 +1,41 @@
-module.exports = class BaseService{
-
-     post(){
-
+const { PrismaClient } = require("@prisma/client");
+const prisma = new PrismaClient();
+module.exports = class BaseService {
+    db;
+    constructor(model_name) {
+        this.db = prisma[model_name];
+        console.log(this.db);
+    }
+    async post(data) {
+        return await this.db.create({
+            data,
+        });
     }
 
-    async  get(){
-        return await this.db.findMany({})
+    async list() {
+        console.log(this);
+        return await this.db.findMany({});
     }
-    async getDetailById(id){
+    async getDetailById(id) {
         return await this.db.findUnique({
-            where:{
-                id
-            }
-        })
-
+            where: {
+                id,
+            },
+        });
     }
-    async delete(id){
+    async delete(id) {
         return await this.db.delete({
-            where:{
-                id
-            }
-        })
+            where: {
+                id,
+            },
+        });
     }
-    async update(id){
+    async update(id, data) {
         return await this.db.update({
-            where:{
-                id
-            }
-        })
+            where: {
+                id,
+            },
+            data,
+        });
     }
-}
+};
