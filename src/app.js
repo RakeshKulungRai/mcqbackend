@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 dotenv.config();
 
-const white_list = ["http://localhost:3000"];
+const white_list = ["http://localhost:3000","http://localhost:5173"];
 const cor_options = {
     origin: (origin, callback) => {
         if (white_list.includes(origin) || !origin) {
