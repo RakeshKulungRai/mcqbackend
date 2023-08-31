@@ -3,6 +3,25 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 module.exports = class QuestionController {
+    async getDetailById(req,res)
+    {
+        const {id} = req.params;
+        const result = await prisma.question.findUnique(
+            {
+                where:
+                {
+                    id:Number(id)
+                },
+                include:
+                {
+                    options:true,
+                    answer:true
+                }
+            }
+        );
+        res.status(200).send(result);
+
+    }
     async getAll(req, res) {
         const result = await prisma.question.findMany({
             include: {

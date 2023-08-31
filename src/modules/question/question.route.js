@@ -8,6 +8,6 @@ router.post("/:id/create-option", question_controller.createOption);
 router.post("/:id/create-answer", question_controller.createAnswer);
 // router.delete("/:id", question_controller.delete);
 // router.put("/:id", question_controller.update);
-// router.get("/:id", question_controller.getDetailById);
+router.get("/:id", question_controller.getDetailById);
 
 module.exports = router;
