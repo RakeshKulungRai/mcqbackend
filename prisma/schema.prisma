@@ -34,7 +34,7 @@ model Option {
   id               Int                      @id @default(autoincrement())
   question_id      Int
   option           String
-  question         Question                 @relation(fields: [question_id], references: [id])
+  question         Question                 @relation(fields: [question_id],onDelete: Cascade, references: [id])
   answer           Answer?
   created_at       DateTime?                @default(now())
   challenge_answer ChallegeQuestionAnswer[]
@@ -43,9 +43,9 @@ model Option {
 model Answer {
   id          Int       @id @default(autoincrement())
   question_id Int       @unique
-  question    Question  @relation(fields: [question_id], references: [id])
+  question    Question  @relation(fields: [question_id],onDelete: Cascade, references: [id])
   option_id   Int       @unique
-  option      Option    @relation(fields: [option_id], references: [id])
+  option      Option    @relation(fields: [option_id],onDelete: Cascade, references: [id])
   created_at  DateTime? @default(now())
 }
 
