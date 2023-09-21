@@ -1,7 +1,10 @@
 const authRouter = require("./auth/auth.route");
 const questionRouter = require("./question/question.route");
+const challengeRouter = require("./challenge/challenge.route");
 const { Router } = require("express");
+const { verifyUser } = require("../middleware/auth.middleware");
 const router = Router();
 router.use("/auth", authRouter);
 router.use("/questions", questionRouter);
+router.use("/challenges", verifyUser, challengeRouter);
 module.exports = router;

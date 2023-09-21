@@ -4,16 +4,15 @@ module.exports = class BaseService {
     db;
     constructor(model_name) {
         this.db = prisma[model_name];
-        console.log(this.db);
     }
-    async post(data) {
+    async create(data) {
         return await this.db.create({
             data,
         });
     }
 
     async list() {
-        console.log(this);
+        console.log("list");
         return await this.db.findMany({});
     }
     async getDetailById(id) {
