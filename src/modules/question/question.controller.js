@@ -12,11 +12,15 @@ module.exports = class QuestionController {
   async update(req,res)
   {
     const {id} = req.params;
+    const {question,score}= req.body;
     const result = await prisma.question.update({
         where:{
             id:Number(id)
         },
-        data:req.body
+        data:{
+            question:question,
+            score:Number(score)
+        }
     })
     res.status(200).send(result);
   }
@@ -33,9 +37,13 @@ module.exports = class QuestionController {
   async updateanswer(req,res)
   {
     const {id} = req.params
+    const {question_id,option_id} = req.body
     const result = await prisma.answer.update({
         where:{id:Number(id)},
-        data:req.body
+        data: {
+            question_id: Number(question_id),
+            option_id:Number(option_id)
+        },
     })
     res.status(200).send(result)
   }
